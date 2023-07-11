@@ -23,15 +23,8 @@ function CreateComment({setCardPage, cardId, onCommentSubmit}) {
             } else {
                 r.json().then(e => console.log("error"))
             }
+            setComment('');
         })
-        // .then(r => r.json())
-        // .then((newComment) => {
-        //     setCardPage((prevCardPage) => ({
-        //         ...prevCardPage,
-        //         comments: [...prevCardPage.comments, newComment]
-        //     }))
-        //     setComment("")
-        // })
     }
   return (
     <div>
