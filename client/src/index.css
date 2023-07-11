@@ -115,6 +115,20 @@ code {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.card-name-container {
+  display: flex;
+  align-items: center;
+}
+
+.card-name-container h1 {
+  margin-right: 40px;
+}
+
+.card-name-container button {
+    font-size: 8px;
+    padding: 5px 10px;
+}
+
 .card h1 {
   font-size: 24px;
   margin-bottom: 10px;

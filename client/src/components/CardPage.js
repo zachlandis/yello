@@ -10,6 +10,8 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
   const [editedComment, setEditedComment] = useState(null)
   const [editedCardName, setEditedCardName] = useState('');
   const [isCardNameEditing, setCardNameEditing] = useState(false);
+  const [editedCardDescription, setEditedCardDescription] = useState('')
+  const [isCardDescriptionEditing, setIsCardDescriptionEditing] = useState('')
 
   const { currentUser, setCurrentUser } = useContext(UserContext)
 
@@ -77,7 +79,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
         });
     }
 
-    function handleCardUpdate() {
+    function handleCardNameUpdate() {
       fetch(`/cards/${cardPage.id}`, {
         method: 'PATCH',
         headers: {
@@ -94,6 +96,20 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
         .catch((error) => {
           console.error('Error updating card name:', error);
         });
+    }
+
+    function handleCardDescriptionUpdate() {
+      fetch(`/cards/${cardPage.id}`, {
+        method: 'PATCH',
+        headers: {"Content-Type": "application/json"}, 
+        body: JSON.stringify({description: editedCardDescription}),
+      })
+      .then((response) => {
+        if (response.ok) {
+          onCardUpdate(editedCardDescription)
+          setIsCardDescriptionEditing(false)
+        }
+      })
     }
     
 
@@ -124,23 +140,38 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
   
   return (
     <div className='card-page'>
-        <h1>
-          {isCardNameEditing ? (
-            <input
-              type="text"
-              value={editedCardName}
-              onChange={(e) => setEditedCardName(e.target.value)}
-            />
-          ) : (
-            cardPage.card_name
-          )}
-        </h1>
-        {isCardNameEditing ? (
-            <button onClick={handleCardUpdate}>Save</button>) 
+        <div className='card-name-container'>
+          <h1>
+            {isCardNameEditing ? (
+              <input
+                type="text"
+                value={editedCardName}
+                onChange={(e) => setEditedCardName(e.target.value)}
+              />
+            ) 
             : 
-            (<button onClick={() => setCardNameEditing(true)}>Edit</button>)}
+            (cardPage.card_name)}
+          </h1>
+          {isCardNameEditing ? (
+              <button onClick={handleCardNameUpdate}>Save</button>) 
+              : 
+              (<button onClick={() => setCardNameEditing(!isCardNameEditing)}>Edit</button>)}
+          </div>
         <h6>Description:</h6>
-        <p>{cardPage.description}</p>
+        <p>{isCardDescriptionEditing ? (
+          <input
+            type="text"
+            value={editedCardDescription}
+            onChange={(e) => setEditedCardDescription(e.target.value)}
+          />) 
+          :
+          (cardPage.description)}
+        </p>
+        {isCardDescriptionEditing ? (
+          <button onClick={handleCardDescriptionUpdate}>Save</button>)
+          :
+          (<button onClick={() => setIsCardDescriptionEditing(!isCardDescriptionEditing)}>Edit</button>)
+        }
         <h1>Comments:</h1>
         <ul>
         {sortedComments.map((comment) => (

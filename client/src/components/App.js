@@ -43,8 +43,7 @@ function handleCardUpdate(updatedCard) {
   const updatedCards = allCards.map((card) => {
     if (card.id === updatedCard.id) {
       return {
-        ...card,
-        card_name: updatedCard.card_name
+        updatedCard
       }
     }
     return card
