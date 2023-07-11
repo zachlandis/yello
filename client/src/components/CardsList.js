@@ -4,19 +4,28 @@ import { useContext } from 'react';
 import { UserContext } from '../context/user';
 import CreateCard from './CreateCard';
 
-function CardsList({cards, onCreateCard}){
+function CardsList({cards, onCreateCard, onDeleteCard}){
   const [newCardFormVisible, setNewCardFormVisible] = useState(false)
 
   const { currentUser, setCurrentUser } = useContext(UserContext)
-  
-  console.log("From CardList, current user:", currentUser)
+
+  function handleCardDelete(card) {
+    fetch(`/cards/${card.id}`, {
+      method: "DELETE",
+    })
+    .then(r => {
+      if (r.ok) {
+        onDeleteCard(card)
+      }
+    })
+  }
 
   
   const mappedCards = cards.map((eachCard) => (
     <div key={eachCard.id} className='card'>
         <h1>{eachCard.card_name}</h1>
         <Link to={`/cards/${eachCard.id}`}>See More</Link>
-        <button>Delete Card</button>
+        <button onClick={() => handleCardDelete(eachCard)}>Delete Card</button>
     </div>
   ));
 

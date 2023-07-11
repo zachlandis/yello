@@ -56,6 +56,12 @@ function handleCreateCard(newCard) {
   setAllCards(prevCards => [...prevCards, newCard])
 }
 
+function handleDeleteCard(deletedCard) {
+  console.log("From App, handleDeleteCard", deletedCard)
+  const updatedCards = allCards.filter((card) => card.id !== deletedCard.id)
+  setAllCards(updatedCards)
+}
+
 
 // COMMENT CRUD
 function handleCommentUpdate(comment) {
@@ -119,7 +125,7 @@ function handleCommentSubmit(comment) {
             <CardPage onCommentDelete={handleCommentDelete} allCards={allCards} onCommentSubmit={handleCommentSubmit} onCommentUpdate={handleCommentUpdate} onCardUpdate={handleCardUpdate}/>
           </Route>
           <Route path="/cards">
-            <CardsList cards={allCards} onCreateCard={handleCreateCard} />
+            <CardsList cards={allCards} onCreateCard={handleCreateCard} onDeleteCard={handleDeleteCard} />
           </Route> 
           <Route path="/auth" component={Login}/>
           <Route path="/logout" component={Logout}/>
