@@ -38,7 +38,19 @@ function App() {
 
 // CARD CRUD
 
-
+function handleCardUpdate(updatedCard) {
+  console.log("From App, handleCardUpdate", updatedCard)
+  const updatedCards = allCards.map((card) => {
+    if (card.id === updatedCard.id) {
+      return {
+        ...card,
+        card_name: updatedCard.card_name
+      }
+    }
+    return card
+  })
+  setAllCards(updatedCards)
+}
 
 
 // COMMENT CRUD
