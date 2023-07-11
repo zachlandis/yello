@@ -93,6 +93,10 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
       
       return date.toLocaleString(undefined, options);
     }
+
+  
+    const sortedComments = cardPage.comments ? cardPage.comments.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) : [];
+
     
   
   return (
@@ -100,8 +104,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
         <h1>{cardPage.card_name}</h1>
         <h1>Comments:</h1>
         <ul>
-        {cardPage.comments &&
-          cardPage.comments.map((comment) => (
+        {sortedComments.map((comment) => (
             <li key={comment.id}>
               {comment.editing && editedComment && comment.id === editedComment.id ? (
                   <div>
@@ -118,7 +121,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
                     <button onClick={() => handleSave(editedComment)}>SAVE</button>
                   </div>
                 ) : (
-                  <div>
+                  <div className='comment-div'>
                     {comment.body}
                     <div>
                       {formatDateTime(comment.created_at)}

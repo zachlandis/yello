@@ -195,5 +195,12 @@ code {
   padding: 5px 10px;
 }
 
+.comment-div {
+  background-color: #c3c3c3;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
 

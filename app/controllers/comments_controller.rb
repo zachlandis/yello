@@ -3,9 +3,9 @@ class CommentsController < ApplicationController
     def index 
         if params[:card_id]
             card = Card.find(params[:card_id])
-            comments = card.comments
+            comments = card.comments.order(created_at: :desc)
         else
-            comments = Comment.all 
+            comments = Comment.all.order(created_at: :desc)
         end
             render json: comments, include: :card
     end

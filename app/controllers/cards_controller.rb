@@ -1,7 +1,7 @@
 class CardsController < ApplicationController
 
     def index 
-        cards = Card.all 
+        cards = Card.all.order(created_at: :desc) 
         render json: cards
     end
 
