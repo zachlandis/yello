@@ -36,10 +36,16 @@ function App() {
     })
 }, [])
 
+// CARD CRUD
+
+
+
+
+// COMMENT CRUD
 function handleCommentUpdate(comment) {
   const cardId = comment.card_id;
   const commentId = comment.id;
-  console.log("From handleCommentUpdate", comment)
+  console.log("From App, handleCommentUpdate", comment)
   const updatedCards = allCards.map((card) => {
     if (card.id === cardId) {
       const updatedComments = card.comments.map((c) => 
@@ -94,7 +100,7 @@ function handleCommentSubmit(comment) {
       <div className="App">
         <Switch>
           <Route path="/cards/:id">
-            <CardPage onCommentDelete={handleCommentDelete} allCards={allCards} onCommentSubmit={handleCommentSubmit} onCommentUpdate={handleCommentUpdate}/>
+            <CardPage onCommentDelete={handleCommentDelete} allCards={allCards} onCommentSubmit={handleCommentSubmit} onCommentUpdate={handleCommentUpdate} onCardUpdate={handleCardUpdate}/>
           </Route>
           <Route path="/cards">
             <CardsList cards={allCards} />

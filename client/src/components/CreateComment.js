@@ -29,6 +29,10 @@ function CreateComment({setCardPage, cardId, onCommentSubmit}) {
             setComment('');
         })
     }
+
+    
+
+
   return (
     <div>
         <form onSubmit={handleCommentSubmit}>

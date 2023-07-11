@@ -4,10 +4,13 @@ import CreateComment from './CreateComment'
 import { UserContext } from '../context/user'
 
 
-function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards }) {
+function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards, onCardUpdate }) {
   const [isCreateFormVisible, setIsCreateFormVisible] = useState(false)
   const [cardPage, setCardPage] = useState({})
   const [editedComment, setEditedComment] = useState(null)
+  const [editedCardName, setEditedCardName] = useState('');
+  const [isCardNameEditing, setCardNameEditing] = useState(false);
+
   const { currentUser, setCurrentUser } = useContext(UserContext)
 
   const params = useParams()
@@ -74,6 +77,26 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
         });
     }
 
+    function handleCardUpdate() {
+      fetch(`/cards/${cardPage.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ card_name: editedCardName }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            onCardUpdate(editedCardName)
+            setCardNameEditing(false);
+          }
+        })
+        .catch((error) => {
+          console.error('Error updating card name:', error);
+        });
+    }
+    
+
 
     function formatDateTime(datetimeString) {
       const options = { 
@@ -101,7 +124,23 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
   
   return (
     <div className='card-page'>
-        <h1>{cardPage.card_name}</h1>
+        <h1>
+          {isCardNameEditing ? (
+            <input
+              type="text"
+              value={editedCardName}
+              onChange={(e) => setEditedCardName(e.target.value)}
+            />
+          ) : (
+            cardPage.card_name
+          )}
+        </h1>
+        {isCardNameEditing ? (
+            <button onClick={handleCardUpdate}>Save</button>) 
+            : 
+            (<button onClick={() => setCardNameEditing(true)}>Edit</button>)}
+        <h6>Description:</h6>
+        <p>{cardPage.description}</p>
         <h1>Comments:</h1>
         <ul>
         {sortedComments.map((comment) => (
