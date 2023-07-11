@@ -37,9 +37,10 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
     }
 
     function handleEdit(comment) {
-      setEditedComment(comment)
+      setEditedComment({...comment})
       const updatedComment = {
         ...comment,
+        user_id: currentUser.id,
         editing: true,
       };
       setCardPage((prevCardPage) => ({
@@ -57,7 +58,11 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ body: comment.body }),
+        body: JSON.stringify({ 
+          body: comment.body,
+          user_id: currentUser.id
+        }
+          ),
       })
         .then((response) => {
           if (response.ok) {
@@ -67,6 +72,26 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
         .catch((error) => {
           console.error("Error updating comment:", error);
         });
+    }
+
+
+    function formatDateTime(datetimeString) {
+      const options = { 
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      };
+      
+      const date = new Date(datetimeString);
+      if (isNaN(date.getTime())) {
+        // Invalid date format, return the original datetimeString
+        return datetimeString;
+      }
+      
+      return date.toLocaleString(undefined, options);
     }
     
   
@@ -95,6 +120,9 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards 
                 ) : (
                   <div>
                     {comment.body}
+                    <div>
+                      {formatDateTime(comment.created_at)}
+                    </div>
                     <div className="button-group">
                       <button onClick={() => handleEdit(comment)}>EDIT</button>
                       <button onClick={() => handleDelete(comment)}>DELETE</button>
