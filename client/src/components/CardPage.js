@@ -5,12 +5,12 @@ import { UserContext } from '../context/user'
 
 
 function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards, onCardUpdate }) {
-  const [isCreateFormVisible, setIsCreateFormVisible] = useState(false)
   const [cardPage, setCardPage] = useState({})
+  const [isCreateFormVisible, setIsCreateFormVisible] = useState(false)
   const [editedComment, setEditedComment] = useState(null)
-  const [editedCardName, setEditedCardName] = useState('');
+  const [cardName, setCardName] = useState('');
   const [isCardNameEditing, setCardNameEditing] = useState(false);
-  const [editedCardDescription, setEditedCardDescription] = useState('')
+  const [cardDescription, setCardDescription] = useState('')
   const [isCardDescriptionEditing, setIsCardDescriptionEditing] = useState('')
 
   const { currentUser, setCurrentUser } = useContext(UserContext)
@@ -85,11 +85,11 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ card_name: editedCardName }),
+        body: JSON.stringify({ card_name: cardName }),
       })
         .then((response) => {
           if (response.ok) {
-            onCardUpdate(editedCardName)
+            onCardUpdate(cardName)
             setCardNameEditing(false);
           }
         })
@@ -102,11 +102,11 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
       fetch(`/cards/${cardPage.id}`, {
         method: 'PATCH',
         headers: {"Content-Type": "application/json"}, 
-        body: JSON.stringify({description: editedCardDescription}),
+        body: JSON.stringify({description: cardDescription}),
       })
       .then((response) => {
         if (response.ok) {
-          onCardUpdate(editedCardDescription)
+          onCardUpdate(cardDescription)
           setIsCardDescriptionEditing(false)
         }
       })
@@ -145,8 +145,8 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
             {isCardNameEditing ? (
               <input
                 type="text"
-                value={editedCardName}
-                onChange={(e) => setEditedCardName(e.target.value)}
+                value={cardName}
+                onChange={(e) => setCardName(e.target.value)}
               />
             ) 
             : 
@@ -161,8 +161,8 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
         <p>{isCardDescriptionEditing ? (
           <input
             type="text"
-            value={editedCardDescription}
-            onChange={(e) => setEditedCardDescription(e.target.value)}
+            value={cardDescription}
+            onChange={(e) => setCardDescription(e.target.value)}
           />) 
           :
           (cardPage.description)}

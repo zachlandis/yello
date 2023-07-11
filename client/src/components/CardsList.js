@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react';
 import { UserContext } from '../context/user';
+import CreateCard from './CreateCard';
 
 function CardsList({cards}){
 
@@ -20,6 +21,7 @@ function CardsList({cards}){
 
   return (
     <>
+    <CreateCard/>
     {mappedCards}
     </>
   )
