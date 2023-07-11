@@ -4,9 +4,10 @@ import CreateComment from './CreateComment'
 import { UserContext } from '../context/user'
 
 
-function CardPage({ onCommentDelete, onCommentSubmit, allCards }) {
+function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards }) {
   const [isCreateFormVisible, setIsCreateFormVisible] = useState(false)
   const [cardPage, setCardPage] = useState({})
+  const [editedComment, setEditedComment] = useState(null)
   const { currentUser, setCurrentUser } = useContext(UserContext)
 
   const params = useParams()
@@ -36,6 +37,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, allCards }) {
     }
 
     function handleEdit(comment) {
+      setEditedComment(comment)
       const updatedComment = {
         ...comment,
         editing: true,
@@ -57,19 +59,16 @@ function CardPage({ onCommentDelete, onCommentSubmit, allCards }) {
         },
         body: JSON.stringify({ body: comment.body }),
       })
-        .then((response) => response.json())
-        .then((updatedComment) => {
-          setCardPage((prevCardPage) => ({
-            ...prevCardPage,
-            comments: prevCardPage.comments.map((c) =>
-              c.id === updatedComment.id ? updatedComment : c
-            ),
-          }));
+        .then((response) => {
+          if (response.ok) {
+            onCommentUpdate(comment)
+          }
         })
         .catch((error) => {
           console.error("Error updating comment:", error);
         });
     }
+    
   
   return (
     <div className='card-page'>
@@ -79,35 +78,31 @@ function CardPage({ onCommentDelete, onCommentSubmit, allCards }) {
         {cardPage.comments &&
           cardPage.comments.map((comment) => (
             <li key={comment.id}>
-              {comment.editing ? (
-                <div>
-                  <input
-                    type="text"
-                    value={comment.body}
-                    onChange={(e) => {
-                      const updatedComment = {
-                        ...comment,
-                        body: e.target.value,
-                      };
-                      setCardPage((prevCardPage) => ({
-                        ...prevCardPage,
-                        comments: prevCardPage.comments.map((c) =>
-                          c.id === comment.id ? updatedComment : c
-                        ),
-                      }));
-                    }}
-                  />
-                  <button onClick={() => handleSave(comment)}>SAVE</button>
-                </div>
-              ) : (
-                <div>
-                  {comment.body}
-                  <div className='button-group'>
-                    <button onClick={() => handleEdit(comment)}>EDIT</button>
-                    <button onClick={() => handleDelete(comment)}>DELETE</button>
+              {comment.editing && editedComment && comment.id === editedComment.id ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={editedComment.body}
+                      onChange={(e) =>
+                        setEditedComment((prevComment) => ({
+                          ...prevComment,
+                          body: e.target.value,
+                        }))
+                      }
+                    />
+                    <button onClick={() => handleSave(editedComment)}>SAVE</button>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div>
+                    {comment.body}
+                    <div className="button-group">
+                      <button onClick={() => handleEdit(comment)}>EDIT</button>
+                      <button onClick={() => handleDelete(comment)}>DELETE</button>
+                    </div>
+                  </div>
+                )}
+
+              
             </li>
             ))}
         </ul>

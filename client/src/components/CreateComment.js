@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { UserContext } from '../context/user'
 
 function CreateComment({setCardPage, cardId, onCommentSubmit}) {
     const [comment, setComment] = useState("")
+
+    const {currentUser, setCurrentUser} = useContext(UserContext)
 
 
     function handleCommentSubmit(e) {
@@ -9,7 +12,7 @@ function CreateComment({setCardPage, cardId, onCommentSubmit}) {
         const commentValue = {
             body: comment,
             card_id: cardId,
-            user_id: 3
+            user_id: currentUser.id
         }
 
         fetch(`/comments`, {
