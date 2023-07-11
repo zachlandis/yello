@@ -5,7 +5,7 @@ function SignUpForm () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { setUser } = useContext(UserContext)
+  const { currentUser, setCurrentUser } = useContext(UserContext)
 
   function onSubmit(e) {
     e.preventDefault()
@@ -21,7 +21,8 @@ function SignUpForm () {
     })
     .then(res => {
       if(res.ok){
-        res.json().theN(setUser(userData))
+        res.json().then(setCurrentUser)
+          
       } else {
         res.json().then(data => {console.log(data.error)})
       }
@@ -31,21 +32,24 @@ function SignUpForm () {
 
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-      <input
-        type='password'
-        placeholder='Password'
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <button type="submit">Sign Up</button>
-    </form>
+    <div>
+      <form className="signup-form" onSubmit={onSubmit}>
+      <h2>Sign Up</h2>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <input
+          type='password'
+          placeholder='Password'
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
   )
 }
 
