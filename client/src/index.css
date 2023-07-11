@@ -124,27 +124,25 @@ code {
   margin-right: 40px;
 }
 
-.card-name-container button {
-    font-size: 8px;
-    padding: 5px 10px;
-}
-
 .card h1 {
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-.card a {
+.card a,
+.card button {
   display: inline-block;
   background-color: #4caf50;
   color: #fff;
+  margin-right: 8px;
   padding: 8px 16px;
   border-radius: 3px;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
-.card a:hover {
+.card a:hover, 
+.card button:hover{
   background-color: #000000;
 }
 
