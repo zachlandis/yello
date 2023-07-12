@@ -29,6 +29,8 @@ function App() {
     })
   }, [])
 
+  console.log(currentUser)
+
   useEffect(() => {
     fetch(`/cards`)
     .then((r) => {

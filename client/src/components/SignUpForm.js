@@ -4,6 +4,7 @@ import { UserContext } from '../context/user'
 function SignUpForm () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
 
   const { currentUser, setCurrentUser } = useContext(UserContext)
 
@@ -12,7 +13,8 @@ function SignUpForm () {
 
     const userData = {
       email,
-      password
+      password,
+      username
     }
     fetch(`/users`, {
       method: 'POST',
@@ -40,6 +42,12 @@ function SignUpForm () {
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+        />
+        <input
+          type="username"
+          placeholder="Username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
         />
         <input
           type='password'

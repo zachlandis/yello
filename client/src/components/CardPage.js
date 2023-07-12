@@ -192,7 +192,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
                   </div>
                 ) : (
                   <div className='comment-div'>
-                    <p><strong>{currentUser.email}</strong></p>
+                    <p><strong>{currentUser.username}</strong></p>
                     <p>{comment.body}</p>
                     <div>
                       {formatDateTime(comment.created_at)}

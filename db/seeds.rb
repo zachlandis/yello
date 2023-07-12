@@ -1,8 +1,8 @@
 puts 'seeding'
 
-user1 = User.create(email: 'user1@example.com', password: 'password1')
-user2 = User.create(email: 'user2@example.com', password: 'password2')
-user3 = User.create(email: 'user3@example.com', password: 'password3')
+user1 = User.create(email: 'user1@example.com', username: 'user1', password: 'password1')
+user2 = User.create(email: 'user2@example.com', username: 'user2', password: 'password2')
+user3 = User.create(email: 'user3@example.com', username: 'user3', password: 'password3')
 
 card1 = Card.create(card_name: 'Card 1', description: Faker::Lorem.sentences)
 card2 = Card.create(card_name: 'Card 2', description: Faker::Lorem.sentences)

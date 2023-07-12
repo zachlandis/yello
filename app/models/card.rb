@@ -3,5 +3,4 @@ class Card < ApplicationRecord
     has_many :users, through: :comments
 
     validates :card_name, presence: true
-    validates :description, presence: true
 end

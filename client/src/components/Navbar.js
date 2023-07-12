@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-left">
         <div>
-          <p>{currentUser.email}</p>
+          <p><strong>{currentUser.username}</strong></p>
         </div>
       </div>
       <div className="navbar-right">
