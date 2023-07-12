@@ -4,24 +4,24 @@ class UsersController < ApplicationController
 
     def index
         users = User.all 
-        render json: users
+        render json: users, status: :ok
     end
     
     def show
         current_user = User.find(session[:user_id])
-        render json: current_user
+        render json: current_user, status: :ok
     end
     
     def create 
         user = User.create(user_params)
             session[:user_id] = user.id # remember who our user is
-            render json: user, status: :ok
+            render json: user, status: :accepted
     end
 
     def update
         user = User.find(params[:id])
         user.update(user_params)
-        render json: user
+        render json: user, status: :accepted
     end
 
     def destroy

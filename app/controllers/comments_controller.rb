@@ -7,23 +7,23 @@ class CommentsController < ApplicationController
         else
             comments = Comment.all.order(created_at: :desc)
         end
-            render json: comments, include: :card
+            render json: comments, include: :card, , status: :ok
     end
 
     def show
         comment = Comment.find(params[:id])
-        render json: comment, include: :card
+        render json: comment, include: :card, status: :ok
     end
 
     def create
         comment = Comment.create(comment_params)
-        render json: comment, status: :created
+        render json: comment, status: :accepted
     end
 
     def update
         comment = Comment.find(params[:id])
         comment.update(comment_params)
-        render json: comment
+        render json: comment, status: :accepted
     end
 
     def destroy

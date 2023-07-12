@@ -14,8 +14,12 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
+        <div>
+          <p>{currentUser.email}</p>
+        </div>
       </div>
       <div className="navbar-right">
+        <br/>
         <div className="dropdown-container">
           <button className="dropdown-toggle" onClick={toggleDropdown}>
             Menu
