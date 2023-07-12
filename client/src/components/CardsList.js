@@ -24,6 +24,8 @@ function CardsList({cards, onCreateCard, onDeleteCard}){
   const mappedCards = cards.map((eachCard) => (
     <div key={eachCard.id} className='card'>
         <h1>{eachCard.card_name}</h1>
+        <p>{eachCard.description}</p>
+        <p><strong>💬</strong> {eachCard.comments.length}</p>
         <Link to={`/cards/${eachCard.id}`}>See More</Link>
         <button onClick={() => handleCardDelete(eachCard)}>Delete Card</button>
     </div>

@@ -26,7 +26,7 @@ function CreateCard({onCreateCard}) {
                 r.json().then(data => onCreateCard(data))
             } else {
                 r.json().then(data => 
-                    setErrors(Object.entries(data.errors)))
+                    setErrors(data.errors))
             }
             setCardName("")
             setDescription("")
@@ -59,7 +59,7 @@ function CreateCard({onCreateCard}) {
             />
             <input type='submit' />
         </form>
-        {errors ? errors.map((e) => <div style={{color: "red"}}>{e[0]} {e[1]}</div>):null}
+        {errors ? errors.map((e) => <div style={{color: "red"}}>{e}</div>):null}
     </div>
   )
 }

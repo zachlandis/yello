@@ -62,6 +62,7 @@ code {
 
 .login-form input[type="text"],
 .login-form input[type="password"],
+.signup-form input[type="text"],
 .signup-form input[type="email"],
 .signup-form input[type="password"] {
   margin: 0 auto;

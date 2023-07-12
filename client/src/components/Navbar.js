@@ -27,6 +27,9 @@ function Navbar() {
           {isDropdownOpen && (
             <ul className="dropdown-menu">
               <li>
+              <Link to="/">Home</Link>
+              </li>
+              <li>
                 <Link to="/cards">Cards</Link>
               </li>
               {currentUser ? null : (

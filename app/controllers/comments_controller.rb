@@ -7,12 +7,12 @@ class CommentsController < ApplicationController
         else
             comments = Comment.all.order(created_at: :desc)
         end
-            render json: comments, include: :card, status: :ok
+            render json: comments, status: :ok
     end
 
     def show
         comment = Comment.find(params[:id])
-        render json: comment, include: :card, status: :ok
+        render json: comment, status: :ok
     end
 
     def create

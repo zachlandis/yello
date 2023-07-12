@@ -9,6 +9,7 @@ import CardsList from "./CardsList";
 import CardPage from "./CardPage";
 import Login from "./Login";
 import Logout from "./Logout";
+import Home from "./Home";
 
 function App() {
   const [page, setPage] = useState("/")
@@ -29,18 +30,25 @@ function App() {
     })
   }, [])
 
-  console.log(currentUser)
-
   useEffect(() => {
+    setIsLoading(true)
     fetch(`/cards`)
     .then((r) => {
         if(r.ok) {
-            r.json().then((data) => setAllCards(data))
+            r.json().then((data) => {
+              setIsLoading(false)
+              setAllCards(data)})
         } else {
             r.json().then((data) => setErrors(data.errors))
         }
     })
 }, [])
+
+useEffect(() => {
+  console.log(isLoading)
+})
+
+console.log(allCards)
 
 // CARD CRUD
 
@@ -120,11 +128,12 @@ function handleCommentSubmit(comment) {
   setAllCards(updatedCards)
 }
 
+  if (isLoading) return <h1>Loading...</h1>
+
   if(!currentUser) return <Login setCurrentUser={setCurrentUser}/>
 
   if (errors) return <h1>{errors}</h1>
 
-  if (isLoading) return <h1>Loading...</h1>
 
   return (
     <>
@@ -141,7 +150,7 @@ function handleCommentSubmit(comment) {
           <Route path="/logout" component={Logout}/>
           <Route path="/users/new" component={SignUpForm}/>
           <Route path="/">
-            <h1>HOME</h1>
+            <Home allCards={allCards}/>
           </Route>
         </Switch>
     </div>

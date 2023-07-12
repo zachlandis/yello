@@ -44,7 +44,7 @@ function SignUpForm () {
           onChange={e => setEmail(e.target.value)}
         />
         <input
-          type="username"
+          type="text"
           placeholder="Username"
           value={username}
           onChange={e => setUsername(e.target.value)}

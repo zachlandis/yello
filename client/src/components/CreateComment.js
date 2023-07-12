@@ -3,7 +3,7 @@ import { UserContext } from '../context/user'
 
 function CreateComment({setCardPage, cardId, onCommentSubmit}) {
     const [comment, setComment] = useState("")
-
+    const [errors, setErrors] = useState([])
     const {currentUser, setCurrentUser} = useContext(UserContext)
 
 
@@ -24,12 +24,12 @@ function CreateComment({setCardPage, cardId, onCommentSubmit}) {
             if (r.ok) {
               r.json().then(data => onCommentSubmit(data))
             } else {
-                r.json().then(e => console.log("error"))
+                r.json().then(data => setErrors(Object.entries(data.errors)))
             }
             setComment('');
         })
     }
-
+    
     
 
 
