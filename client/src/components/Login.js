@@ -9,7 +9,7 @@ function Login() {
     
     const {currentUser, setCurrentUser} = useContext(UserContext)
     const [displaySignUpForm, setDisplaySignUpForm] = useState(false)
-    const [errors, setErrors] = useState(null)
+    const [errors, setErrors] = useState([])
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -83,6 +83,7 @@ function Login() {
         <button id='signup-button' onClick={handleSignupClick}>Sign Up</button>
         <br/>
         {displaySignUpForm ? <SignUpForm/> : null}
+        {errors ? <div>{errors}</div> : null}
     </div>
   )
 }
