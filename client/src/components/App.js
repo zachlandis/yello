@@ -13,14 +13,18 @@ import Logout from "./Logout";
 function App() {
   const [page, setPage] = useState("/")
   const [allCards, setAllCards] = useState([])
-  const params = useParams()
   const { currentUser, setCurrentUser } = useContext(UserContext)
+  const [errors, setErrors] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const params = useParams()
 
   useEffect(() => {
     fetch('/auth')
     .then(r => {
       if(r.ok) {
         r.json().then(user => setCurrentUser(user))
+      } else {
+        r.json().then(data => setErrors(data.error))
       }
     })
   }, [])
@@ -30,6 +34,7 @@ function App() {
     .then((r) => {
         if(r.ok) {
             r.json().then((data) => setAllCards(data))
+            setIsLoading(!isLoading)
         } else {
             console.log("Cards not found")
         }
@@ -115,6 +120,10 @@ function handleCommentSubmit(comment) {
 }
 
   if(!currentUser) return <Login setCurrentUser={setCurrentUser}/>
+
+  if (errors) return <h1>{errors}</h1>
+
+  if (isLoading) return <h1>Loading...</h1>
 
   return (
     <>

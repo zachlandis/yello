@@ -9,7 +9,7 @@ function Login() {
     
     const {currentUser, setCurrentUser} = useContext(UserContext)
     const [displaySignUpForm, setDisplaySignUpForm] = useState(false)
-    
+    const [errors, setErrors] = useState(null)
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -37,7 +37,7 @@ function Login() {
                     history.push(`/cards`)
                 })
             } else {
-                r.json().then(console.log("Error logging in"))
+                r.json().then(data => setErrors(data.error))
             }
         })
     }
@@ -52,6 +52,7 @@ function Login() {
     }
 
 
+    if (errors) return <h1>{errors}</h1>
 
   return (
     <div id='login_div'>
