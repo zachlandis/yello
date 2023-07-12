@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 function CreateCard({onCreateCard}) {
     const [cardName, setCardName] = useState('')
     const [description, setDescription] = useState('')
+    const [errors, setErrors] = useState([])
 
 
     function handleCreateCard(e) {
@@ -23,7 +24,12 @@ function CreateCard({onCreateCard}) {
         .then(r => {
             if (r.ok) {
                 r.json().then(data => onCreateCard(data))
+            } else {
+                r.json().then(data => 
+                    setErrors(Object.entries(data.errors)))
             }
+            setCardName("")
+            setDescription("")
         })
         
     }
@@ -53,6 +59,7 @@ function CreateCard({onCreateCard}) {
             />
             <input type='submit' />
         </form>
+        {errors ? errors.map((e) => <div style={{color: "red"}}>{e[0]} {e[1]}</div>):null}
     </div>
   )
 }

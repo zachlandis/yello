@@ -38,6 +38,7 @@ function Login() {
                 })
             } else {
                 r.json().then(data => setErrors(data.error))
+                history.push(`/users/new`)
             }
         })
     }
@@ -50,9 +51,6 @@ function Login() {
     function handleSignupClick() {
         setDisplaySignUpForm(!displaySignUpForm)
     }
-
-
-    if (errors) return <h1>{errors}</h1>
 
   return (
     <div id='login_div'>

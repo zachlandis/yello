@@ -14,8 +14,8 @@ function App() {
   const [page, setPage] = useState("/")
   const [allCards, setAllCards] = useState([])
   const { currentUser, setCurrentUser } = useContext(UserContext)
-  const [errors, setErrors] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [errors, setErrors] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const params = useParams()
 
   useEffect(() => {
@@ -34,9 +34,8 @@ function App() {
     .then((r) => {
         if(r.ok) {
             r.json().then((data) => setAllCards(data))
-            setIsLoading(!isLoading)
         } else {
-            console.log("Cards not found")
+            r.json().then((data) => setErrors(data.errors))
         }
     })
 }, [])
