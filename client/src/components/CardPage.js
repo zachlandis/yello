@@ -4,6 +4,7 @@ import CreateComment from './CreateComment'
 import { UserContext } from '../context/user'
 
 
+
 function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards, onCardUpdate }) {
   const [cardPage, setCardPage] = useState({})
   const [isCreateFormVisible, setIsCreateFormVisible] = useState(false)
@@ -156,8 +157,9 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
               (<button onClick={() => setCardNameEditing(!isCardNameEditing)}>Edit</button>)}
           </div>
         <h6>Description:</h6>
-        <p>{isCardDescriptionEditing ? (
-          <input
+        <p className={isCardDescriptionEditing ? null : 'card-description'}>{isCardDescriptionEditing ? (
+          <textarea 
+            className='card-description-box'
             type="text"
             value={cardDescription}
             onChange={(e) => setCardDescription(e.target.value)}
@@ -170,7 +172,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
           :
           (<button onClick={() => setIsCardDescriptionEditing(!isCardDescriptionEditing)}>Edit</button>)
         }
-        <h1>Comments:</h1>
+        <h6>Comments:</h6>
         <ul>
         {sortedComments.map((comment) => (
             <li key={comment.id}>
