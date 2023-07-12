@@ -17,16 +17,20 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
 
   const params = useParams()
 
-  const { card_name } = allCards.find(card => card.id === params.id) || {};
-
   useEffect(() => {
     const foundCard = allCards.find(card => card.id === params.id);
     if (foundCard) {
       setCardPage(foundCard);
+      setCardName(foundCard.card_name)
+      setCardDescription(foundCard.description)
     } else {
       fetch(`/cards/${params.id}`)
         .then(r => r.json())
-        .then(data => setCardPage(data));
+        .then(data => {
+          setCardPage(data)
+          setCardName(data.card_name)
+          setCardDescription(data.description)
+        });
     }
   }, [params.id, allCards]);
     
@@ -111,8 +115,6 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
         }
       })
     }
-    
-
 
     function formatDateTime(datetimeString) {
       const options = { 
@@ -126,17 +128,13 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
       
       const date = new Date(datetimeString);
       if (isNaN(date.getTime())) {
-        // Invalid date format, return the original datetimeString
         return datetimeString;
-      }
-      
+      }      
       return date.toLocaleString(undefined, options);
     }
 
   
     const sortedComments = cardPage.comments ? cardPage.comments.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) : [];
-
-    
   
   return (
     <div className='card-page'>
