@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+    before_action :authorized, only: [:update, :destroy]
+
 
     def index 
         if params[:card_id]
@@ -21,14 +23,23 @@ class CommentsController < ApplicationController
     end
 
     def update
-        comment = Comment.find(params[:id])
-        comment.update(comment_params)
-        render json: comment, status: :accepted
+        comment = @current_user.comments.find(params[:id])
+        if comment
+            comment.update(comment_params)
+            render json: comment, status: :accepted
+        else
+            render json: { error: "Unauthorized"}, status: :unauthorized
+        end
     end
 
     def destroy
-        comment = Comment.find(params[:id])
-        comment.destroy
+        comment = @current_user.comments.find_by_id(params[:id])
+        if comment 
+            comment.destroy
+            head :no_content
+        else
+            render json: { error: "Unauthorized"}, status: :unauthorized
+        end
     end
 
     private

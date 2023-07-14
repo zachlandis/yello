@@ -31,7 +31,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    setIsLoading(true)
+    // setIsLoading(true)
     fetch(`/cards`)
     .then((r) => {
         if(r.ok) {
@@ -47,8 +47,6 @@ function App() {
 useEffect(() => {
   console.log(isLoading)
 })
-
-console.log(allCards)
 
 // CARD CRUD
 
@@ -98,6 +96,7 @@ function handleCommentUpdate(comment) {
 }
 
 function handleCommentDelete(comment) {
+  console.log("From App, handleCommentDelete", comment)
   const cardId = comment.card_id;
   const commentId = comment.id;
   const updatedCards = allCards.map((card) => {
