@@ -200,10 +200,10 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
                     <div>
                       {formatDateTime(comment.created_at)}
                     </div>
-                    <div className="button-group">
+                    { comment.user_id === currentUser.id ? <div className="button-group">
                       <button onClick={() => handleEdit(comment)}>EDIT</button>
                       <button onClick={() => handleDelete(comment)}>DELETE</button>
-                    </div>
+                    </div> : null}
                   </div>
                 )}
 
