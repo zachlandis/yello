@@ -48,6 +48,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
     }
 
     function handleEdit(comment) {
+      if (comment.user_id === currentUser.id) {
       setEditedComment({...comment})
       const updatedComment = {
         ...comment,
@@ -61,6 +62,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
         ),
       }));    
     }
+  }
 
 
     function handleSave(comment) {
