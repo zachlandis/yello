@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-left">
         <div>
-          <p><strong>{currentUser.username}</strong></p>
+          <Link to='/home'><strong>{currentUser.username}</strong></Link>
         </div>
       </div>
       <div className="navbar-right">
