@@ -43,7 +43,6 @@ function App() {
 // CARD CRUD
 
 function handleCardUpdate(updatedCard) {
-  console.log("From App, handleCardUpdate", updatedCard)
   const updatedCards = allCards.map((card) => {
     if (card.id === updatedCard.id) {
       return updatedCard
@@ -58,7 +57,6 @@ function handleCreateCard(newCard) {
 }
 
 function handleDeleteCard(deletedCard) {
-  console.log("From App, handleDeleteCard", deletedCard)
   const updatedCards = allCards.filter((card) => card.id !== deletedCard.id)
   setAllCards(updatedCards)
 }
@@ -68,7 +66,6 @@ function handleDeleteCard(deletedCard) {
 function handleCommentUpdate(comment) {
   const cardId = comment.card_id;
   const commentId = comment.id;
-  console.log("From App, handleCommentUpdate", comment)
   const updatedCards = allCards.map((card) => {
     if (card.id === cardId) {
       const updatedComments = card.comments.map((c) => 
@@ -85,7 +82,6 @@ function handleCommentUpdate(comment) {
 }
 
 function handleCommentDelete(comment) {
-  console.log("From App, handleCommentDelete", comment)
   const cardId = comment.card_id;
   const commentId = comment.id;
   const updatedCards = allCards.map((card) => {
@@ -102,7 +98,6 @@ function handleCommentDelete(comment) {
 }
 
 function handleCommentSubmit(comment) {
-  console.log("From App, handleCommentSubmit", comment)
   const cardId = comment.card_id
   const updatedCards = allCards.map((card) => {
     if (card.id === cardId) {
