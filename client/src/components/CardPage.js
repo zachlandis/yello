@@ -13,26 +13,21 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
   const [isCardNameEditing, setCardNameEditing] = useState(false);
   const [cardDescription, setCardDescription] = useState('')
   const [isCardDescriptionEditing, setIsCardDescriptionEditing] = useState('')
+  const [errors, setErrors] = useState(null)
 
   const { currentUser, setCurrentUser } = useContext(UserContext)
 
   const params = useParams()
   
-  
   useEffect(() => {
-    const foundCard = allCards.find(card => card.id === params.id);
+    const foundCard = allCards.find(card => card.id === parseInt(params.id));
     if (foundCard) {
       setCardPage(foundCard);
       setCardName(foundCard.card_name)
       setCardDescription(foundCard.description)
+      setErrors(null)
     } else {
-      fetch(`/cards/${params.id}`)
-        .then(r => r.json())
-        .then(data => {
-          setCardPage(data)
-          setCardName(data.card_name)
-          setCardDescription(data.description)
-        });
+      setErrors( { message: "Card not found" } )
     }
   }, [params.id, allCards]);
     
@@ -139,6 +134,11 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
 
   
     const sortedComments = cardPage.comments ? cardPage.comments.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) : [];
+
+
+    if (errors !== null) {
+      return <div>{errors.message}</div>
+    }
   
   return (
     <div className='card-page'>
@@ -152,7 +152,7 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
               />
             ) 
             : 
-            (cardPage.card_name)}
+            (cardPage.card_name)} 
           </h1>
           {isCardNameEditing ? (
               <button onClick={handleCardNameUpdate}>Save</button>) 

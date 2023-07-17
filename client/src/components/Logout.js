@@ -13,14 +13,12 @@ function Logout() {
       .then((r) => {
         if (r.ok) {
           setCurrentUser(null); // Update authentication status
-          history.push('/'); // Redirect to the desired page after logout
+          history.push('/auth'); // Redirect to the desired page after logout
         } else {
-          // Handle error response
           console.log('Logout failed');
         }
       })
       .catch((error) => {
-        // Handle fetch error
         console.error('Error during logout:', error);
       });
   }

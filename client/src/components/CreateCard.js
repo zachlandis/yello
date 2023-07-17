@@ -13,8 +13,6 @@ function CreateCard({onCreateCard}) {
             card_name: cardName,
             description: description
         }
-
-        console.log("Submitted Create Card Form")
         fetch('/cards', {
             method: "POST", 
             headers: {"Content-Type": "application/json"},

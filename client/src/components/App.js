@@ -27,7 +27,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    // setIsLoading(true)
+    setIsLoading(true)
     fetch(`/cards`)
     .then((r) => {
         if(r.ok) {
@@ -39,10 +39,6 @@ function App() {
         }
     })
 }, [])
-
-useEffect(() => {
-  console.log(isLoading)
-})
 
 // CARD CRUD
 
