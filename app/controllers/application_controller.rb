@@ -9,7 +9,6 @@ class ApplicationController < ActionController::API
 
     def current_user
         @current_user ||= User.find_by_id(session[:user_id]) 
-        # puts "Current user: #{@current_user}" # Debugging statement
     end
 
     def authorized
@@ -19,7 +18,7 @@ class ApplicationController < ActionController::API
 
     private
 
-    def authenticate_user #check if a user is logged in
+    def authenticate_user 
         render json: {errors: {User: "Not Authorized"} }, status: :unauthorized unless current_user
     end
 

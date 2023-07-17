@@ -83,7 +83,7 @@ function Login() {
         <button id='signup-button' onClick={handleSignupClick}>Sign Up</button>
         <br/>
         {displaySignUpForm ? <SignUpForm/> : null}
-        {errors ? <div>{errors}</div> : null}
+        {errors ? <div style={{color: "red"}}>{errors}</div> : null}
     </div>
   )
 }

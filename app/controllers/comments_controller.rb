@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-    before_action :authorized, only: [:update, :destroy]
+    before_action :authenticate_user, only: [:update, :destroy]
 
 
     def index 

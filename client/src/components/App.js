@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
-import { Switch, Route } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, Switch, Route } from 'react-router-dom'
 import Navbar from './Navbar';
 import SignUpForm from "./SignUpForm";
-import { useContext } from "react";
 import { UserContext } from "../context/user";
 import CardsList from "./CardsList";
 import CardPage from "./CardPage";
@@ -24,9 +22,7 @@ function App() {
     .then(r => {
       if(r.ok) {
         r.json().then(user => setCurrentUser(user))
-      } else {
-        r.json().then(data => setErrors(data.error))
-      }
+      } 
     })
   }, [])
 
@@ -54,9 +50,7 @@ function handleCardUpdate(updatedCard) {
   console.log("From App, handleCardUpdate", updatedCard)
   const updatedCards = allCards.map((card) => {
     if (card.id === updatedCard.id) {
-      return {
-        updatedCard
-      }
+      return updatedCard
     }
     return card
   })
@@ -64,8 +58,7 @@ function handleCardUpdate(updatedCard) {
 }
 
 function handleCreateCard(newCard) {
-  console.log("From App, handleCreateCard", newCard)
-  setAllCards(prevCards => [...prevCards, newCard])
+  setAllCards(prevCards => [...prevCards, newCard]);
 }
 
 function handleDeleteCard(deletedCard) {
@@ -131,11 +124,9 @@ function handleCommentSubmit(comment) {
 
   if(!currentUser) return <Login setCurrentUser={setCurrentUser}/>
 
-  if (errors) return <h1>{errors}</h1>
-
-
   return (
     <>
+    {/* {errors ? <div style={{color: "red"}}>{errors}</div> : null} */}
     <Navbar onChangePage={setPage}/>
       <div className="App">
         <Switch>
