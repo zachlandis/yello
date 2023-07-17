@@ -12,8 +12,8 @@ function Logout() {
     })
       .then((r) => {
         if (r.ok) {
-          setCurrentUser(null); // Update authentication status
-          history.push('/auth'); // Redirect to the desired page after logout
+          setCurrentUser(null);
+          history.push('/auth'); 
         } else {
           console.log('Logout failed');
         }

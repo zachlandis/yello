@@ -12,10 +12,11 @@ import Home from "./Home";
 function App() {
   const [page, setPage] = useState("/")
   const [allCards, setAllCards] = useState([])
-  const { currentUser, setCurrentUser } = useContext(UserContext)
   const [errors, setErrors] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const params = useParams()
+  
+  const { currentUser, setCurrentUser } = useContext(UserContext)
 
   useEffect(() => {
     fetch('/auth')
@@ -36,9 +37,10 @@ function App() {
               setAllCards(data)})
         } else {
             r.json().then((data) => setErrors(data.errors))
+            setIsLoading(false)
         }
     })
-}, [])
+}, [currentUser])
 
 // CARD CRUD
 
@@ -117,7 +119,6 @@ function handleCommentSubmit(comment) {
 
   return (
     <>
-    {/* {errors ? <div style={{color: "red"}}>{errors}</div> : null} */}
     <Navbar onChangePage={setPage}/>
       <div className="App">
         <Switch>
