@@ -23,8 +23,7 @@ function SignUpForm () {
     })
     .then(res => {
       if(res.ok){
-        res.json().then(setCurrentUser)
-          
+        res.json().then(setCurrentUser)  
       } else {
         res.json().then(data => {console.log(data.error)})
       }

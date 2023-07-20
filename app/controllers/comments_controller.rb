@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
-    before_action :authenticate_user, only: [:update, :destroy]
+    before_action :find_comment, only: [:show, :update, :destroy]
+    before_action :authenticate_user, only: [:show, :update, :destroy]
+    before_action :is_owner?, only: [:update, :destroy]
 
 
     def index 
@@ -13,8 +15,7 @@ class CommentsController < ApplicationController
     end
 
     def show
-        comment = Comment.find(params[:id])
-        render json: comment, status: :ok
+        render json: @comment, status: :ok
     end
 
     def create
@@ -23,19 +24,17 @@ class CommentsController < ApplicationController
     end
 
     def update
-        comment = @current_user.comments.find(params[:id])
-        if comment
-            comment.update(comment_params)
-            render json: comment, status: :accepted
+        if @comment
+            @comment.update(comment_params)
+            render json: @comment, status: :accepted
         else
             render json: { error: "Unauthorized"}, status: :unauthorized
         end
     end
 
     def destroy
-        comment = @current_user.comments.find_by_id(params[:id])
-        if comment 
-            comment.destroy
+        if @comment 
+            @comment.destroy
             head :no_content
         else
             render json: { error: "Unauthorized"}, status: :unauthorized
@@ -47,4 +46,15 @@ class CommentsController < ApplicationController
     def comment_params
         params.permit(:body, :card_id, :user_id)
     end
+
+    def find_comment
+        @comment = Comment.find(params[:id])
+    end
+
+    def is_owner?
+        permitted = @comment.user_id == current_user.id
+        render json: { User: "Does not own this"}, status: :forbidden unless permitted
+    end
+
+    
 end

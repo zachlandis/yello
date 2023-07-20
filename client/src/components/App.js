@@ -36,7 +36,7 @@ function App() {
               setIsLoading(false)
               setAllCards(data)})
         } else {
-            r.json().then((data) => setErrors(data.errors))
+            r.json().then((data) => setErrors(data.error))
             setIsLoading(false)
         }
     })
@@ -116,6 +116,8 @@ function handleCommentSubmit(comment) {
   if (isLoading) return <h1>Loading...</h1>
 
   if(!currentUser) return <Login setCurrentUser={setCurrentUser}/>
+
+  if(errors) return <h1>{errors}</h1>
 
   return (
     <>
