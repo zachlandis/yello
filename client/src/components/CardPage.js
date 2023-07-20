@@ -92,7 +92,8 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
       })
         .then((response) => {
           if (response.ok) {
-            onCardUpdate(cardName)
+            const updatedCard = {...cardPage, card_name: cardName}
+            onCardUpdate(updatedCard)
             setCardNameEditing(false);
           }
         })
@@ -109,7 +110,8 @@ function CardPage({ onCommentDelete, onCommentSubmit, onCommentUpdate, allCards,
       })
       .then((response) => {
         if (response.ok) {
-          onCardUpdate(cardDescription)
+          const updatedCard = {...cardPage, description: cardDescription}
+          onCardUpdate(updatedCard)
           setIsCardDescriptionEditing(false)
         }
       })
