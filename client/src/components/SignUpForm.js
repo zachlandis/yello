@@ -5,6 +5,7 @@ function SignUpForm () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
+  const [errors, setErrors] = useState(null)
 
   const { currentUser, setCurrentUser } = useContext(UserContext)
 
@@ -25,15 +26,14 @@ function SignUpForm () {
       if(res.ok){
         res.json().then(setCurrentUser)  
       } else {
-        res.json().then(data => {console.log(data.error)})
+        res.json().then(data => {setErrors(data.error)})
       }
     })
   }
 
-
-
   return (
     <div>
+      {errors ? <div style={{color: "red"}}>{errors}</div> : null }
       <form className="signup-form" onSubmit={onSubmit}>
       <h2>Sign Up</h2>
         <input
