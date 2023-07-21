@@ -18,11 +18,6 @@ class ApplicationController < ActionController::API
         render json: {errors: {User: "Not Authorized"} }, status: :unauthorized unless current_user
     end
 
-    def is_authorized?
-        permitted = current_user || @comment.user_id == current_user.id
-        render json: { errors: { User: "Insufficient permissions"}}, status: :forbidden unless permitted
-    end
-
     def render_unprocessable_entity_response(exception)
         render json: { errors: exception.record.errors.full_messages}, status: :unprocessable_entity 
     end
